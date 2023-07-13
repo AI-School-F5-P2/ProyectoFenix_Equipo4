@@ -1,5 +1,6 @@
-from fastapi import APIRouter
-from config.db import conn
+from fastapi import APIRouter, Response
+from starlette.status import HTTP_201_CREATED
+from config.db import engine
 from models.user import users
 from schema.user import User
 from cryptography.fernet import Fernet
@@ -9,21 +10,25 @@ f = Fernet(key)
 
 user = APIRouter()
 
-@user.get('/users')
+@user.get('/api/users')
 def get_users():
-    return conn.execute(users.select()).fetchall()
+    with engine.connect() as conn:
+        result = conn.execute(users.select()).fetchall()
 
-@user.post('/users')
+        return result
+
+
+@user.post('/user', status_code=HTTP_201_CREATED)
 def create_user(user: User):
-    new_user = {"name": user.name, "email": user.email}
-    new_user["password"] = f.encrypt(user.password.encode("utf-8"))
-    conn.execute(users.insert().values(new_user))
-    print(result.lastrowid)
-    return "received"
+    with engine.connect() as conn:
+        new_user = user.dict()
+        new_user = {"name": user.name, "email": user.email}
+        new_user["password"] = f.encrypt(user.password.encode("utf-8"))
+        result = conn.execute(users.insert().values(new_user))
+        conn.commit()
+        print(result)
+        return Response(status_code=HTTP_201_CREATED)
 
-@user.get('/users')
-def helloworld():
-    return "hello world 2"
 
 @user.get('/users')
 def helloworld():
