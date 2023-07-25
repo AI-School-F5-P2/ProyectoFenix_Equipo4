@@ -76,35 +76,10 @@ def update_student_price(student_id: int):
         # Actualizar el precio total del estudiante en la tabla 'students'
         stmt = update(students).where(students.c.id_user == student_id).values(Total_price=new_total_price)
         conn.execute(stmt)
-
+        logging.info("guarda precio")
         # Devuelve el estudiante actualizado
         updated_student = conn.execute(select([students]).where(students.c.id_user == student_id)).first()
         # Convertir el objeto a una instancia de StudentSchema
         logging.info(updated_student)
-        updated_student_schema = StudentSchema(**updated_student)
-        return updated_student_schema
-
-"""
-@student_router.put("/api/students/{student_id}/update_student_price/", response_model=StudentSchema)
-def update_student_price(student_id: int):
-    # Calcular el nuevo precio total con descuentos para el estudiante
-    new_total_price = calculate_student_total_price(student_id)
-    logging.info(f"El precio es: {new_total_price}")
-    with engine.connect() as conn:
-        try:
-            # Actualizar el precio total del estudiante en la tabla 'students'
-            stmt = update(students).where(students.c.id_user == student_id).values(Total_price=new_total_price)
-            conn.execute(stmt)
-
-            # Devuelve el estudiante actualizado
-            updated_student = conn.execute(select([students]).where(students.c.id_user == student_id)).first()
-
-            if updated_student:
-                # Convertir el objeto a una instancia de StudentSchema
-                updated_student_data = dict(updated_student)
-                updated_student_schema = StudentSchema(**updated_student_data)
-                return updated_student_schema
-            else:
-                return {"message": "Student not found"}
-        except NoResultFound:
-            return {"message": "Student not found"}"""
+        #updated_student_schema = StudentSchema(**updated_student)
+        return updated_student
