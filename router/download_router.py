@@ -22,3 +22,18 @@ def descargar_alumnos():
     response = Response(content=csv_data, media_type="text/csv")
     response.headers["Content-Disposition"] = "attachment; filename=alumnos.csv"
     return response
+
+@router.get('/descargar_inscripciones', responde_class=Response, status_code=200)
+def descargar_inscripciones():
+    with engine.connect() as connection:
+        query = "SELECT * FROM inscriptions;"
+        results = connection.execute(query).fetchall()
+
+    column_names = results[0].keys()   
+    df = pd.DataFrame(results, columns=column_names) 
+
+    csv_data = df.to_csv(index=False)
+
+    response = Response(content=csv_data, media_type="text/csv")
+    response.headers["Content-Disposition"] = "attachment; filename=inscripciones.csv"
+    return response
