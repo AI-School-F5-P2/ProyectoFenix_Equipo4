@@ -1,4 +1,3 @@
-
 from fastapi import APIRouter, HTTPException
 from starlette.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT
 from schema.inscriptions_schema import InscriptionSchema

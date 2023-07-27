@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from router import download_router
 from router.router import user
 from router.inscriptions_router import inscriptions_router
 from router.class_router import classes_router
@@ -11,6 +12,7 @@ from router.descuentos_alumnos_router import descuentos_alumnos_router
 
 app = FastAPI()
 
+app.include_router(download_router.router)
 app.include_router(user)
 app.include_router(inscriptions_router)
 app.include_router(classes_router)

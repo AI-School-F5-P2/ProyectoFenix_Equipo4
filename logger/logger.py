@@ -1,10 +1,9 @@
 import logging
 import os
 
+def log_info(info) -> None:
 
-def log_info() -> None:
-
-    archivo = r"C:\Users\ferna\Desktop\Git(Hub)\ProyectoFenix_Equipo4\basic.log"
+    archivo = r"basic.log"
 
     os.chmod(archivo, 0o666)
 
@@ -22,14 +21,14 @@ def log_info() -> None:
 
     logger.addHandler(file_handler)
 
-    logger.info("This is running right")
+    logger.info(info)
 
     os.chmod(archivo, 0o444)
 
 
-def log_debug() -> None:
+def log_debug(bug) -> None:
 
-    archivo = r"C:\Users\ferna\Desktop\Git(Hub)\ProyectoFenix_Equipo4\basic.log"
+    archivo = r"basic.log"
 
     os.chmod(archivo, 0o666)
 
@@ -47,13 +46,13 @@ def log_debug() -> None:
 
     logger.addHandler(file_handler)
 
-    logger.debug("Have a BUG")
+    logger.debug(bug)
 
     os.chmod(archivo, 0o444)
 
-def log_error() -> None:
+def log_error(error) -> None:
 
-    archivo = r"C:\Users\ferna\Desktop\Git(Hub)\ProyectoFenix_Equipo4\basic.log"
+    archivo = r"basic.log"
 
     os.chmod(archivo, 0o666)
 
@@ -71,13 +70,13 @@ def log_error() -> None:
 
     logger.addHandler(file_handler)
 
-    logger.error("Hava a ERROR")
+    logger.error(error)
 
     os.chmod(archivo, 0o444)
 
-def log_warning() -> None:
+def log_warning(warning) -> None:
 
-    archivo = r"C:\Users\ferna\Desktop\Git(Hub)\ProyectoFenix_Equipo4\basic.log"
+    archivo = r"basic.log"
 
     os.chmod(archivo, 0o666)
 
@@ -95,13 +94,13 @@ def log_warning() -> None:
 
     logger.addHandler(file_handler)
 
-    logger.warning("Something is not right. WARNING!!!")
+    logger.warning(warning)
 
     os.chmod(archivo, 0o444)
 
-def log_critical() -> None:
+def log_critical(critical) -> None:
 
-    archivo = r"C:\Users\ferna\Desktop\Git(Hub)\ProyectoFenix_Equipo4\basic.log"
+    archivo = r"basic.log"
 
     os.chmod(archivo, 0o666)
 
@@ -119,7 +118,7 @@ def log_critical() -> None:
 
     logger.addHandler(file_handler)
 
-    logger.critical("All is BAD. CRITICAL!!!")
+    logger.critical(critical)
     
     os.chmod(archivo, 0o444)
 
