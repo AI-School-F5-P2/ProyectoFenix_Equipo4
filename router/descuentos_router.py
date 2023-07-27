@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException
-from starlette.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT
+from starlette.status import HTTP_201_CREATED, HTTP_204_NO_CONTENT,  HTTP_500_INTERNAL_SERVER_ERROR, HTTP_404_NOT_FOUND
 from schema.class_schema import ClassSchema
 from config.db import engine
 from schema.descuentos_schema import DiscountSchema
