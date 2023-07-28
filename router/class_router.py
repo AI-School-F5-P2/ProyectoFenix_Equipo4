@@ -10,7 +10,7 @@ from logger.logger import log_critical, log_error, log_info
 classes_router = APIRouter()
 
 
-@classes_router.get("/api/classes", response_model=List[ClassSchema])
+@classes_router.get("/api/classes", tags=["class"], response_model=List[ClassSchema])
 def get_classes():
     try:
         with engine.connect() as conn:
@@ -22,7 +22,7 @@ def get_classes():
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@classes_router.get("/api/classes/{class_id}", response_model=ClassSchema)
+@classes_router.get("/api/classes/{class_id}", tags=["class"], response_model=ClassSchema)
 def get_class(class_id: int):
     try:
         with engine.connect() as conn:
@@ -41,7 +41,7 @@ def get_class(class_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@classes_router.post("/api/classes", status_code=HTTP_201_CREATED)
+@classes_router.post("/api/classes", tags=["class"], status_code=HTTP_201_CREATED)
 def create_class(class_data: ClassSchema):
     try:
         with engine.connect() as conn:
@@ -54,7 +54,7 @@ def create_class(class_data: ClassSchema):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@classes_router.put("/api/classes/{class_id}", response_model=ClassSchema)
+@classes_router.put("/api/classes/{class_id}", tags=["class"], response_model=ClassSchema)
 def update_class(class_data: ClassSchema, class_id: int):
     try:
         updated_data = class_data.dict()
@@ -72,7 +72,7 @@ def update_class(class_data: ClassSchema, class_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@classes_router.delete("/api/classes/{class_id}", status_code=HTTP_204_NO_CONTENT)
+@classes_router.delete("/api/classes/{class_id}", tags=["class"], status_code=HTTP_204_NO_CONTENT)
 def delete_class(class_id: int):
     try:
         with engine.connect() as conn:
@@ -84,7 +84,7 @@ def delete_class(class_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@classes_router.put("/api/classes/{class_id}/assign_professor/{professor_id}")
+@classes_router.put("/api/classes/{class_id}/assign_professor/{professor_id}", tags=["class"])
 def assign_professor_to_class(class_id: int, professor_id: int):
     try:
         with engine.connect() as conn:

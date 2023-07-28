@@ -9,7 +9,7 @@ from logger.logger import log_critical, log_info, log_error
 professor_router = APIRouter()
 
 
-@professor_router.get("/api/professors", response_model=List[ProfessorSchema])
+@professor_router.get("/api/professors", tags=["professors"], response_model=List[ProfessorSchema])
 def get_professors():
     try:
         with engine.connect() as conn:
@@ -21,7 +21,7 @@ def get_professors():
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@professor_router.get("/api/professors/{professor_id}", response_model=ProfessorSchema)
+@professor_router.get("/api/professors/{professor_id}",tags=["professors"], response_model=ProfessorSchema)
 def get_professor(professor_id: int):
     try:
         with engine.connect() as conn:
@@ -40,7 +40,7 @@ def get_professor(professor_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@professor_router.post("/api/professors", status_code=HTTP_201_CREATED)
+@professor_router.post("/api/professors", tags=["professors"],status_code=HTTP_201_CREATED)
 def create_professor(professor_data: ProfessorSchema):
     try:
         with engine.connect() as conn:
@@ -54,7 +54,7 @@ def create_professor(professor_data: ProfessorSchema):
 
 
 @professor_router.put(
-    "/api/professors/{professor_id}", response_model=ProfessorSchema
+    "/api/professors/{professor_id}", tags=["professors"],response_model=ProfessorSchema
 )
 def update_professor(professor_data: ProfessorSchema, professor_id: int):
     try:
@@ -75,7 +75,7 @@ def update_professor(professor_data: ProfessorSchema, professor_id: int):
 
 
 @professor_router.delete(
-    "/api/professors/{professor_id}", status_code=HTTP_204_NO_CONTENT
+    "/api/professors/{professor_id}",tags=["professors"], status_code=HTTP_204_NO_CONTENT
 )
 def delete_professor(professor_id: int):
     try:

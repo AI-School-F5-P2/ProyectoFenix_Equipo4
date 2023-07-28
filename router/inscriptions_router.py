@@ -16,7 +16,7 @@ def log_critical(mensaje):
     # Tu código aquí para manejar la entrada de registro crítica
     print(f"CRÍTICO: {mensaje}")
 
-@inscriptions_router.get("/api/inscriptions", response_model=List[InscriptionSchema])
+@inscriptions_router.get("/api/inscriptions", tags=["inscriptions"], response_model=List[InscriptionSchema])
 def get_inscriptions():
     try:
         with engine.connect() as conn:
@@ -28,7 +28,7 @@ def get_inscriptions():
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@inscriptions_router.get("/api/inscriptions/{inscription_id}", response_model=InscriptionSchema)
+@inscriptions_router.get("/api/inscriptions/{inscription_id}", tags=["inscriptions"],  response_model=InscriptionSchema)
 def get_inscription(inscription_id: int):
     try:
         with engine.connect() as conn:
@@ -47,7 +47,7 @@ def get_inscription(inscription_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@inscriptions_router.post("/api/inscriptions", status_code=HTTP_201_CREATED)
+@inscriptions_router.post("/api/inscriptions", tags=["inscriptions"],  status_code=HTTP_201_CREATED)
 def create_inscription(inscription_data: InscriptionSchema):
     try:
         with engine.connect() as conn:
@@ -64,7 +64,7 @@ def create_inscription(inscription_data: InscriptionSchema):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@inscriptions_router.put("/api/inscriptions/{inscription_id}", response_model=InscriptionSchema)
+@inscriptions_router.put("/api/inscriptions/{inscription_id}", tags=["inscriptions"],  response_model=InscriptionSchema)
 def update_inscription(
     inscription_data: InscriptionSchema, inscription_id: int
 ):
@@ -88,7 +88,7 @@ def update_inscription(
 
 
 @inscriptions_router.delete(
-    "/api/inscriptions/{inscription_id}", status_code=HTTP_204_NO_CONTENT
+    "/api/inscriptions/{inscription_id}", tags=["inscriptions"],  status_code=HTTP_204_NO_CONTENT
 )
 def delete_inscription(inscription_id: int):
     try:
@@ -106,7 +106,7 @@ def delete_inscription(inscription_id: int):
 
 
 
-@inscriptions_router.get("/api/inscriptions/by_month/{month}", response_model=List[InscriptionSchema])
+@inscriptions_router.get("/api/inscriptions/by_month/{month}", tags=["inscriptions"],  response_model=List[InscriptionSchema])
 def get_inscriptions_by_month(month: int):
     try:
         with engine.connect() as conn:

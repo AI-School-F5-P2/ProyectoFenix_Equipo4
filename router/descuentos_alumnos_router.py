@@ -8,7 +8,7 @@ from typing import List
 descuentos_alumnos_router = APIRouter()
 
 
-@descuentos_alumnos_router.get("/api/descuentos_alumnos", response_model=List[DescuentoAlumnoSchema])
+@descuentos_alumnos_router.get("/api/descuentos_alumnos", tags=["discounts"], response_model=List[DescuentoAlumnoSchema])
 def get_descuentos_alumnos():
     with engine.connect() as conn:
         result = conn.execute(descuentos_alumnos.select()).fetchall()
@@ -16,7 +16,7 @@ def get_descuentos_alumnos():
         return result
 
 
-@descuentos_alumnos_router.get("/api/descuentos_alumnos/{descuento_alumno_id}", response_model=DescuentoAlumnoSchema)
+@descuentos_alumnos_router.get("/api/descuentos_alumnos/{descuento_alumno_id}",tags=["discounts"], response_model=DescuentoAlumnoSchema)
 def get_descuento_alumno(descuento_alumno_id: int):
     with engine.connect() as conn:
         result = conn.execute(
@@ -26,7 +26,7 @@ def get_descuento_alumno(descuento_alumno_id: int):
         return result
 
 
-@descuentos_alumnos_router.post("/api/descuentos_alumnos", status_code=HTTP_201_CREATED)
+@descuentos_alumnos_router.post("/api/descuentos_alumnos", tags=["discounts"], status_code=HTTP_201_CREATED)
 def create_descuento_alumno(descuento_alumno_data: DescuentoAlumnoSchema):
     with engine.connect() as conn:
         new_descuento_alumno = descuento_alumno_data.dict()
@@ -35,7 +35,7 @@ def create_descuento_alumno(descuento_alumno_data: DescuentoAlumnoSchema):
         return Response(status_code=HTTP_201_CREATED)
 
 
-@descuentos_alumnos_router.put("/api/descuentos_alumnos/{descuento_alumno_id}", response_model=DescuentoAlumnoSchema)
+@descuentos_alumnos_router.put("/api/descuentos_alumnos/{descuento_alumno_id}", tags=["discounts"], response_model=DescuentoAlumnoSchema)
 def update_descuento_alumno(descuento_alumno_data: DescuentoAlumnoSchema, descuento_alumno_id: int):
     with engine.connect() as conn:
         conn.execute(
@@ -51,7 +51,7 @@ def update_descuento_alumno(descuento_alumno_data: DescuentoAlumnoSchema, descue
         return updated_descuento_alumno
 
 
-@descuentos_alumnos_router.delete("/api/descuentos_alumnos/{descuento_alumno_id}", status_code=HTTP_204_NO_CONTENT)
+@descuentos_alumnos_router.delete("/api/descuentos_alumnos/{descuento_alumno_id}", tags=["discounts"], status_code=HTTP_204_NO_CONTENT)
 def delete_descuento_alumno(descuento_alumno_id: int):
     with engine.connect() as conn:
         conn.execute(descuentos_alumnos.delete().where(descuentos_alumnos.c.id_discount_student == descuento_alumno_id))

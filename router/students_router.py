@@ -15,7 +15,7 @@ import pprint
 student_router = APIRouter()
 
 
-@student_router.get("/api/students", response_model=List[StudentSchema])
+@student_router.get("/api/students",tags=["students"], response_model=List[StudentSchema])
 def get_students():
     try:
         with engine.connect() as conn:
@@ -27,7 +27,7 @@ def get_students():
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@student_router.get("/api/students/{student_id}", response_model=StudentSchema)
+@student_router.get("/api/students/{student_id}", tags=["students"], response_model=StudentSchema)
 def get_student(student_id: int):
     try:
         with engine.connect() as conn:
@@ -46,7 +46,7 @@ def get_student(student_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@student_router.post("/api/students", status_code=HTTP_201_CREATED)
+@student_router.post("/api/students",tags=["students"],  status_code=HTTP_201_CREATED)
 def create_student(student_data: StudentSchema):
     try:
         with engine.connect() as conn:
@@ -59,7 +59,7 @@ def create_student(student_data: StudentSchema):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@student_router.put("/api/students/{student_id}", response_model=StudentSchema)
+@student_router.put("/api/students/{student_id}",tags=["students"],  response_model=StudentSchema)
 def update_student(student_data: StudentSchema, student_id: int):
     try:
         with engine.connect() as conn:
@@ -77,7 +77,7 @@ def update_student(student_data: StudentSchema, student_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@student_router.delete("/api/students/{student_id}", status_code=HTTP_204_NO_CONTENT)
+@student_router.delete("/api/students/{student_id}", tags=["students"], status_code=HTTP_204_NO_CONTENT)
 def delete_student(student_id: int):
     try:
         with engine.connect() as conn:
@@ -89,7 +89,7 @@ def delete_student(student_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@student_router.put("/api/students/{student_id}/update_student_price/", response_model=StudentSchema)
+@student_router.put("/api/students/{student_id}/update_student_price/", tags=["students"], response_model=StudentSchema)
 def update_student_price(student_id: int):
     try:
         # Calcular el nuevo precio total con descuentos para el estudiante

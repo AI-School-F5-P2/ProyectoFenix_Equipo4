@@ -9,7 +9,7 @@ from logger.logger import log_critical, log_info, log_error
 manager_router = APIRouter()
 
 
-@manager_router.get("/api/managers", response_model=List[ManagerSchema])
+@manager_router.get("/api/managers", tags=["manager"], response_model=List[ManagerSchema])
 def get_managers():
     try:
         with engine.connect() as conn:
@@ -21,7 +21,7 @@ def get_managers():
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@manager_router.get("/api/managers/{manager_id}", response_model=ManagerSchema)
+@manager_router.get("/api/managers/{manager_id}", tags=["manager"], response_model=ManagerSchema)
 def get_manager(manager_id: int):
     try:
         with engine.connect() as conn:
@@ -40,7 +40,7 @@ def get_manager(manager_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@manager_router.post("/api/managers", status_code=HTTP_201_CREATED)
+@manager_router.post("/api/managers", tags=["manager"], status_code=HTTP_201_CREATED)
 def create_manager(manager_data: ManagerSchema):
     try:
         with engine.connect() as conn:
@@ -53,7 +53,7 @@ def create_manager(manager_data: ManagerSchema):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@manager_router.put("/api/managers/{manager_id}", response_model=ManagerSchema)
+@manager_router.put("/api/managers/{manager_id}", tags=["manager"], response_model=ManagerSchema)
 def update_manager(manager_data: ManagerSchema, manager_id: int):
     try:
         with engine.connect() as conn:
@@ -72,7 +72,7 @@ def update_manager(manager_data: ManagerSchema, manager_id: int):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@manager_router.delete("/api/managers/{manager_id}", status_code=HTTP_204_NO_CONTENT)
+@manager_router.delete("/api/managers/{manager_id}", tags=["manager"], status_code=HTTP_204_NO_CONTENT)
 def delete_manager(manager_id: int):
     try:
         with engine.connect() as conn:

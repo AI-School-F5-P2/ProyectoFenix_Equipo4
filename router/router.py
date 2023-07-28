@@ -6,11 +6,13 @@ from config.db import engine
 from model.users import users
 from werkzeug.security import generate_password_hash, check_password_hash
 from typing import List
+from tags import tags_metadata
 from logger.logger import log_critical, log_debug, log_error, log_info, log_warning
 from sqlalchemy import text
 from config.config import settings
 
 user = APIRouter()
+
 
 @user.get("/")
 def root():
@@ -22,7 +24,7 @@ def root():
     except:
         log_critical("No se pudo establecer conexion")
 
-@user.get("/api/user", response_model=List[UserSchema])
+@user.get("/api/user", tags=["users"], response_model=List[UserSchema])
 def get_users():
     try:
         with engine.connect() as conn:
@@ -34,7 +36,7 @@ def get_users():
         raise HTTPException(status_code=500, detail="Something went wrong")
         
 
-@user.get("/api/user/{user_id}", response_model=UserSchema)
+@user.get("/api/user/{user_id}", tags=["users"], response_model=UserSchema)
 def get_user(user_id: str):
     try:
         with engine.connect() as conn:
@@ -51,7 +53,7 @@ def get_user(user_id: str):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@user.post("/api/user", status_code=HTTP_201_CREATED)
+@user.post("/api/user", tags=["users"], status_code=HTTP_201_CREATED)
 def create_user(data_user: UserSchema):
     try:
         with engine.connect() as conn:
@@ -66,7 +68,7 @@ def create_user(data_user: UserSchema):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@user.post("/api/user/login", status_code=200)
+@user.post("/api/user/login", tags=["users"], status_code=200)
 def user_login(data_user: DataUser):
     try:
         with engine.connect() as conn:
@@ -90,7 +92,7 @@ def user_login(data_user: DataUser):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@user.put("/api/user/{user_id}", response_model=UserSchema)
+@user.put("/api/user/{user_id}", tags=["users"], response_model=UserSchema)
 def update_user(data_update: UserSchema, user_id: str):
     try:
         with engine.connect() as conn:
@@ -105,7 +107,7 @@ def update_user(data_update: UserSchema, user_id: str):
         raise HTTPException(status_code=500, detail="Something went wrong")
 
 
-@user.delete("/api/user/{user_id}", status_code=HTTP_204_NO_CONTENT)
+@user.delete("/api/user/{user_id}", tags=["users"], status_code=HTTP_204_NO_CONTENT)
 def delete_user(user_id: str):
     try:
         with engine.connect() as conn:
